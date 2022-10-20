@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND
 )
 
@@ -24,7 +25,8 @@ class UserCreateView(APIView):
                 'status': HTTP_201_CREATED
             })
         return Response({
-            'message': serializer.errors
+            'message': serializer.errors,
+            'status': HTTP_400_BAD_REQUEST
         })
 
 
@@ -53,9 +55,8 @@ class UserDetailView(APIView):
 
             if serializer.is_valid():
                 serializer.save()
-                user = User.objects.get(id=pk)
                 return Response({
-                    'user': user,
+                    'user': serializer.data,
                     'status': HTTP_200_OK
                 })
 
