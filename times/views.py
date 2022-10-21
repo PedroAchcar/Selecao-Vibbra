@@ -11,11 +11,11 @@ from rest_framework.status import (
 from project.models import Project
 from user.models import User
 from times.models import Time
-from times.serializers import TimeSerializer, TimeReadSerializer
+from times.serializers import TimeSerializer
 
 
 class TimeCreateView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:

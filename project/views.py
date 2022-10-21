@@ -13,7 +13,7 @@ from project.serializers import ProjectReadSerializer, ProjectSerializer
 
 
 class ProjectCreateView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = ProjectSerializer(data=request.data)
@@ -46,7 +46,7 @@ class ProjectCreateView(APIView):
 
 
 class ProjectDetailView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
         try:

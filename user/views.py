@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.views import TokenViewBase
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,11 +10,11 @@ from rest_framework.status import (
 )
 
 from user.models import User
-from user.serializers import UserSerializer
+from user.serializers import UserSerializer, TokenObtainLifetimeSerializer
 
 
 class UserCreateView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -31,7 +32,7 @@ class UserCreateView(APIView):
 
 
 class UserDetailView(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
         try:
@@ -65,3 +66,7 @@ class UserDetailView(APIView):
                 'message': 'User not found',
                 'status': HTTP_404_NOT_FOUND
             })
+
+
+class TokenObtainPairView(TokenViewBase):
+    serializer_class = TokenObtainLifetimeSerializer
