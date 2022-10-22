@@ -110,7 +110,7 @@ class TimeDetailView(APIView):
                     'project_id': request.data['project_id'],
                     'user_id': request.data['user_id']
                 },
-                'status': HTTP_201_CREATED
+                'status': HTTP_200_OK
             })
 
         except Time.DoesNotExist:
@@ -118,9 +118,3 @@ class TimeDetailView(APIView):
                 'message': 'Time not found',
                 'status': HTTP_404_NOT_FOUND
             })
-
-        # except:
-        #     return Response({
-        #         'erros': 'Something went wrong',
-        #         'status': HTTP_400_BAD_REQUEST
-        #     })
