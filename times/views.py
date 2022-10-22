@@ -96,14 +96,22 @@ class TimeDetailView(APIView):
         '''
         try:
             time = Time.objects.get(id=id)
-            serializer = TimeSerializer(instance=time, data=request.data)
+            time.started_at = request.data['started_at']
+            time.ended_at = request.data['ended_at']
+            time.user.id = request.data['user_id']
+            time.project.id = request.data['project_id']
+            time.save()
 
-            if serializer.is_valid():
-                serializer.save()
-                return Response({
-                    'time': serializer.data,
-                    'status': HTTP_200_OK
-                })
+            return Response({
+                'time': {
+                    'id': time.id,
+                    'started_at': time.started_at,
+                    'ended_at': time.ended_at,
+                    'project_id': request.data['project_id'],
+                    'user_id': request.data['user_id']
+                },
+                'status': HTTP_201_CREATED
+            })
 
         except Time.DoesNotExist:
             return Response({
@@ -111,7 +119,8 @@ class TimeDetailView(APIView):
                 'status': HTTP_404_NOT_FOUND
             })
 
-        except:
-            return Response({
-                'erros': serializer.errors
-            })
+        # except:
+        #     return Response({
+        #         'erros': 'Something went wrong',
+        #         'status': HTTP_400_BAD_REQUEST
+        #     })
