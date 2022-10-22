@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,13 +46,14 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
-# }
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30)
 }
 
 MIDDLEWARE = [

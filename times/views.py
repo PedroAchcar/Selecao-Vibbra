@@ -67,3 +67,38 @@ class TimeCreateView(APIView):
                 'message': 'Some error occurred',
                 'status': HTTP_400_BAD_REQUEST
             })
+
+
+class TimeDetailView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, id):
+        times = Time.objects.filter(id=id)
+        serializer = TimeSerializer(instance=times, many=True)
+        return Response({
+            'time': serializer.data,
+            'status': HTTP_200_OK
+        })
+
+    def put(self, request, id):
+        try:
+            time = Time.objects.get(id=id)
+            serializer = TimeSerializer(instance=time, data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response({
+                    'time': serializer.data,
+                    'status': HTTP_200_OK
+                })
+
+        except Time.DoesNotExist:
+            return Response({
+                'message': 'Time not found',
+                'status': HTTP_404_NOT_FOUND
+            })
+
+        except:
+            return Response({
+                'erros': serializer.errors
+            })
