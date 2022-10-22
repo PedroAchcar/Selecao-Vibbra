@@ -6,6 +6,9 @@ from user.serializers import UserSerializer
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    '''
+    Defines a serializer to Project Model to validate the data
+    '''
     user_id = serializers.PrimaryKeyRelatedField(
         many=True, queryset=User.objects.all())
 
@@ -15,6 +18,9 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ProjectReadSerializer(serializers.ModelSerializer):
+    '''
+    Defines a serializer to read the Project Model to return to a get request
+    '''
     user_id = UserSerializer(read_only=True, many=True)
 
     class Meta:

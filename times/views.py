@@ -15,6 +15,9 @@ from times.serializers import TimeSerializer
 
 
 class TimeCreateView(APIView):
+    '''
+    Defines a view for the creation (POST) of a time
+    '''
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
@@ -28,7 +31,8 @@ class TimeCreateView(APIView):
             }
 
             serializer = TimeSerializer(data=data)
-
+            # If the serializer is valid we can save it in the database
+            # To add the Foreign Key of the user and the project, needed to add it after the creation
             if serializer.is_valid():
                 serializer.save()
                 time = Time.objects.get(
@@ -70,10 +74,16 @@ class TimeCreateView(APIView):
 
 
 class TimeDetailView(APIView):
+    '''
+    Defines a view for list (GET) the times of one project or edit one time that already exists (PUT)
+    '''
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, id):
-        times = Time.objects.filter(id=id)
+        '''
+        Id here means the project_id for filtering
+        '''
+        times = Time.objects.filter(project_id=id)
         serializer = TimeSerializer(instance=times, many=True)
         return Response({
             'time': serializer.data,
@@ -81,6 +91,9 @@ class TimeDetailView(APIView):
         })
 
     def put(self, request, id):
+        '''
+        Id here means the time_id for editing
+        '''
         try:
             time = Time.objects.get(id=id)
             serializer = TimeSerializer(instance=time, data=request.data)

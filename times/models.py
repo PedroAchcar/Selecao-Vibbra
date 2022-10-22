@@ -3,6 +3,9 @@ from django.db import models
 
 
 class Time(models.Model):
+    '''
+    Model to define the Time table at the database
+    '''
     started_at = models.DateTimeField(unique=True)
     ended_at = models.DateTimeField(unique=True)
 

@@ -13,6 +13,9 @@ from project.serializers import ProjectReadSerializer, ProjectSerializer
 
 
 class ProjectCreateView(APIView):
+    '''
+    Defines a view for the creation (POST) of a project or list (GET) the projects that already exists
+    '''
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
@@ -46,9 +49,15 @@ class ProjectCreateView(APIView):
 
 
 class ProjectDetailView(APIView):
+    '''
+    Defines a view for the details of one project (GET) or edit one project that already exists (PUT)
+    '''
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
+        '''
+        Pk (Personal Key) here is the ID of the project to get the details of it
+        '''
         try:
             project = Project.objects.get(id=pk)
             serializer = ProjectReadSerializer(project)
@@ -64,6 +73,9 @@ class ProjectDetailView(APIView):
             })
 
     def put(self, request, pk):
+        '''
+        Pk (Personal Key) here is the ID of the project to edit it
+        '''
         try:
             project = Project.objects.get(id=pk)
             serializer = ProjectSerializer(project, data=request.data)

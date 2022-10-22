@@ -46,11 +46,15 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
+# Django Rest Framework configurations
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
+# Django Rest Framework Simple JWT configurations
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30)
@@ -139,5 +143,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Change the default user model
+# Change the default user model to user.models.User
 AUTH_USER_MODEL = 'user.User'

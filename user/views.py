@@ -14,6 +14,9 @@ from user.serializers import UserSerializer, TokenObtainLifetimeSerializer
 
 
 class UserCreateView(APIView):
+    '''
+    Defines a view for the creation (POST) of a user
+    '''
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
@@ -32,9 +35,15 @@ class UserCreateView(APIView):
 
 
 class UserDetailView(APIView):
+    '''
+    Defines a view for the details of one user (GET) or edit one user that already exists (PUT)
+    '''
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, pk):
+        '''
+        Pk (Personal Key) here is the ID of the user to get the details of it
+        '''
         try:
             user = User.objects.get(id=pk)
             serializer = UserSerializer(user)
@@ -50,6 +59,9 @@ class UserDetailView(APIView):
             })
 
     def put(self, request, pk):
+        '''
+        Pk (Personal Key) here is the ID of the user to edit it
+        '''
         try:
             user = User.objects.get(id=pk)
             serializer = UserSerializer(user, data=request.data)
@@ -69,4 +81,7 @@ class UserDetailView(APIView):
 
 
 class TokenObtainPairView(TokenViewBase):
+    '''
+    View that serializes the data of the login/password to generate the proper response
+    '''
     serializer_class = TokenObtainLifetimeSerializer

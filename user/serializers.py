@@ -5,6 +5,9 @@ from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    '''
+    Defines a serializer to User Model to validate the data
+    '''
     class Meta:
         model = User
         fields = ['id', 'name', 'email', 'login', 'password']
@@ -13,6 +16,9 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        '''
+        Default create function was alterated to set the password with criptography
+        '''
         password = validated_data.pop('password', None)
         instance = self.Meta.model(**validated_data)
         if password is not None:
@@ -22,6 +28,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class TokenObtainLifetimeSerializer(TokenObtainPairSerializer):
+    '''
+    Defines a serializer to obtain the JWT Token and add to the response data the user object
+    '''
 
     def validate(self, attrs):
         data = super().validate(attrs)
